@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import brainLogo from "@/assets/brain-logo.png";
 
@@ -9,14 +9,24 @@ export const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about-us" },
-    { name: "Product", path: "/product" },
-    { name: "About Cerebroprotein", path: "/about-cerebroprotein" },
-    { name: "Blogs", path: "/blogs" },
+    { name: "Home", path: "#home" },
+    { name: "About Us", path: "#about-us" },
+    { name: "About Cerebroprotein", path: "#about-cerebroprotein" },
+    { name: "Enquire Now", path: "#enquire-now" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const scrollToSection = (sectionId: string) => {
+    const element = document.querySelector(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const isActive = (path: string) => {
+    if (path === "#home") return location.pathname === "/";
+    return false;
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border shadow-soft">
@@ -49,23 +59,16 @@ export const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                to={item.path}
+                onClick={() => scrollToSection(item.path)}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   isActive(item.path) ? "text-primary" : "text-foreground"
                 }`}
               >
                 {item.name}
-              </Link>
+              </button>
             ))}
-            <Link
-              to="/cart"
-              className="flex items-center space-x-1 text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              <span>Cart</span>
-            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -84,25 +87,16 @@ export const Navbar = () => {
           <div id="mobile-menu" className="lg:hidden border-t border-border">
             <nav className="py-4 space-y-2">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  to={item.path}
-                  className={`block px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${
+                  onClick={() => scrollToSection(item.path)}
+                  className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${
                     isActive(item.path) ? "text-primary bg-secondary" : "text-foreground"
                   }`}
-                  onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
-                </Link>
+                </button>
               ))}
-              <Link
-                to="/cart"
-                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                <span>Cart</span>
-              </Link>
             </nav>
           </div>
         )}

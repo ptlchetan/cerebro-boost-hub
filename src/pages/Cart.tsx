@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trash2, Plus, Minus } from "lucide-react";
-import cerebroproteinProduct from "@/assets/cerebroprotein-product.png";
+import cerebroproteinProduct from "@/assets/cerebroprotein-product-new.png";
 
 interface CartItem {
   id: string;

@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Beaker, Shield, Zap, Brain, CheckCircle, Clock } from "lucide-react";
-import cerebroproteinProduct from "@/assets/cerebroprotein-product.png";
+import cerebroproteinProduct from "@/assets/cerebroprotein-product-new.png";
 
 export default function AboutCerebroprotein() {
   return (

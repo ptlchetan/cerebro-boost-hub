@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { ShieldCheck, Truck, Clock } from "lucide-react";
-import cerebroproteinProduct from "@/assets/cerebroprotein-product.png";
+import cerebroproteinProduct from "@/assets/cerebroprotein-product-new.png";
 
 export default function Checkout() {
   const [searchParams] = useSearchParams();

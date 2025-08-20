@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import brainLogo from "@/assets/brain-logo.png";
+import brainLogo from "@/assets/brain-logo-new.png";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
 
   const navItems = [
@@ -14,6 +15,31 @@ export const Navbar = () => {
     { name: "About Cerebroprotein", path: "#about-cerebroprotein" },
     { name: "Enquire Now", path: "#enquire-now" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["home", "about-us", "about-cerebroprotein", "enquire-now"];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+
+          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Call once to set initial state
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -24,36 +50,19 @@ export const Navbar = () => {
   };
 
   const isActive = (path: string) => {
-    if (path === "#home") return location.pathname === "/";
-    return false;
+    const sectionId = path.replace('#', '');
+    return activeSection === sectionId;
   };
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border shadow-soft">
-      {/* Top utility bar */}
-      <div className="border-b border-border">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-end items-center h-10 text-sm">
-            <div className="flex items-center space-x-4">
-              <Link to="/login" className="text-muted-foreground hover:text-primary transition-colors">
-                Login
-              </Link>
-              <span className="text-muted-foreground">|</span>
-              <Link to="/register" className="text-muted-foreground hover:text-primary transition-colors">
-                Register
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main navbar */}
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
             <img src={brainLogo} alt="Cerebroprotein" className="h-8 w-8" />
-            <span className="text-xl font-bold text-foreground">Cerebroprotein</span>
+            <span className="text-xl font-bold text-foreground">Cerebroprotein.com</span>
           </Link>
 
           {/* Desktop Navigation */}

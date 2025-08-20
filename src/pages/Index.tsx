@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Brain, Shield, Zap, CheckCircle, Heart, Users, Award, Beaker, Clock } from "lucide-react";
-import cerebroproteinProduct from "@/assets/cerebroprotein-product-new.png";
+import cerebroproteinProduct from "@/assets/cerebroprotein-product.png";
 
 const Index = () => {
   const scrollToEnquire = () => {

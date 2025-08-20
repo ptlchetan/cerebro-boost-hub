@@ -15,18 +15,18 @@ export const Footer = () => {
 
           {/* Legal Links */}
           <div className="flex space-x-6">
-            <button className="text-muted-foreground hover:text-primary transition-colors text-sm">
+            <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors text-sm">
               Privacy Policy
-            </button>
-            <button className="text-muted-foreground hover:text-primary transition-colors text-sm">
+            </Link>
+            <Link to="/terms-conditions" className="text-muted-foreground hover:text-primary transition-colors text-sm">
               Terms & Conditions  
-            </button>
+            </Link>
           </div>
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © 2025 Cerebroprotein.com. All rights reserved.
+            © {new Date().getFullYear()} Cerebroprotein. All rights reserved.
           </p>
         </div>
       </div>

@@ -23,7 +23,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/cerebro-boost-hub">
+      <BrowserRouter>
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">

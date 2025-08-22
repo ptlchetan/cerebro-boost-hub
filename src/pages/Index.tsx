@@ -8,8 +8,131 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Brain, Shield, Zap, CheckCircle, Heart, Users, Award, Beaker, Clock } from "lucide-react";
 import cerebroproteinProduct from "@/assets/cerebroprotein_image.png";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useState } from "react";
 
 const Index = () => {
+  const [errors, setErrors] = useState({});
+  const validateForm = () => {
+    let newErrors: Record<string, string> = {};
+
+    if (!formData.product) newErrors.product = "Product selection is required.";
+    if (!formData.full_name) newErrors.full_name = "Full name is required.";
+    if (!formData.phone) newErrors.phone = "Phone number is required.";
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address.";
+    }
+    if (!formData.dob) newErrors.dob = "Date of birth is required.";
+    if (!formData.gender) newErrors.gender = "Gender is required.";
+    if (!formData.address) newErrors.address = "Address is required.";
+    if (!formData.country) newErrors.country = "Country is required.";
+    if (!formData.state) newErrors.state = "State is required.";
+    if (!formData.city) newErrors.city = "City is required.";
+    if (!formData.postal) newErrors.postal = "Postal code is required.";
+    if (!formData.terms) newErrors.terms = "You must accept the terms.";
+
+    return newErrors;
+  };
+
+  const [formData, setFormData] = useState({
+
+    product: "",
+    full_name: "",
+    phone: "",
+    email: "",
+    dob: "",
+    gender: "",
+    address: "",
+    country: "",
+    state: "",
+    city: "",
+    postal: "",
+    physician_name: "",
+    clinic_name: "",
+    clinic_city: "",
+    clinic_mobile: "",
+    allergies: "",
+    terms: false,
+  });
+
+  const handleChange = (e) => {
+
+    const { id, value, type, checked } = e.target;
+
+    setFormData({
+      ...formData,
+      [id]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleSelectChange = (field, value) => {
+
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // frontend validation first
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({}); // clear old errors
+
+    try {
+      const res = await axios.post(
+        "http://127.0.0.1:8000/api/enquiries",
+        formData
+      );
+      Swal.fire({
+        title: "Success!",
+        text: res.data.message || "Enquiry submitted successfully!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      setFormData({
+        product: "",
+        full_name: "",
+        phone: "",
+        email: "",
+        dob: "",
+        gender: "",
+        address: "",
+        country: "",
+        state: "",
+        city: "",
+        postal: "",
+        physician_name: "",
+        clinic_name: "",
+        clinic_city: "",
+        clinic_mobile: "",
+        allergies: "",
+        terms: false,
+      });
+    } catch (err) {
+      if (err.response && err.response.status === 422) {
+
+        setErrors(err.response.data.errors);
+      } else {
+        Swal.fire({
+          title: "Error!",
+          text: "Submission failed. Please check your inputs.",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
+    }
+  };
+
+
   const scrollToEnquire = () => {
     const element = document.querySelector('#enquire-now');
     if (element) {
@@ -59,7 +182,7 @@ const Index = () => {
                 Cerebroprotein 90 mg — Your Solution for Better Mental Clarity
               </h2>
             </div>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="text-center">
                 <img
@@ -71,7 +194,7 @@ const Index = () => {
                   *The product may look different than the picture shown.
                 </p>
               </div>
-              
+
               <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">What it is:</h3>
@@ -79,7 +202,7 @@ const Index = () => {
                     Cerebroprotein 90 mg is a nutritional supplement designed to support brain health and cognitive function.
                   </p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">How it helps:</h3>
                   <p className="text-muted-foreground">
@@ -137,7 +260,7 @@ const Index = () => {
                         </Button>
                       </CardContent>
                     </Card>
-                    
+
                     <Card className="shadow-soft">
                       <CardContent className="p-6 text-center">
                         <h4 className="font-semibold text-foreground mb-2">200 Tablets</h4>
@@ -237,7 +360,7 @@ const Index = () => {
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-foreground mb-6">About Us</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                We are dedicated to advancing brain health through scientifically-backed supplements 
+                We are dedicated to advancing brain health through scientifically-backed supplements
                 that enhance cognitive function and improve quality of life.
               </p>
             </div>
@@ -249,7 +372,7 @@ const Index = () => {
                   <Brain className="h-12 w-12 text-accent mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-foreground mb-4">Our Mission</h3>
                   <p className="text-muted-foreground">
-                    To develop and provide high-quality cognitive health supplements that help people 
+                    To develop and provide high-quality cognitive health supplements that help people
                     achieve their mental potential and maintain brain health throughout their lives.
                   </p>
                 </CardContent>
@@ -260,7 +383,7 @@ const Index = () => {
                   <Heart className="h-12 w-12 text-accent mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-foreground mb-4">Our Vision</h3>
                   <p className="text-muted-foreground">
-                    A world where everyone has access to safe, effective solutions for optimal brain 
+                    A world where everyone has access to safe, effective solutions for optimal brain
                     health, enabling clearer thinking, better memory, and enhanced quality of life.
                   </p>
                 </CardContent>
@@ -312,7 +435,7 @@ const Index = () => {
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-foreground mb-6">About Cerebroprotein 90mg</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                A scientifically-formulated brain health supplement designed to enhance cognitive function, 
+                A scientifically-formulated brain health supplement designed to enhance cognitive function,
                 improve memory, and support overall mental clarity.
               </p>
             </div>
@@ -329,17 +452,17 @@ const Index = () => {
                   *The product may look different than the picture shown.
                 </p>
               </div>
-              
+
               <div className="space-y-6">
                 <h3 className="text-2xl font-bold text-foreground">What is Cerebroprotein?</h3>
                 <p className="text-muted-foreground">
-                  Cerebroprotein 90mg is a premium cognitive enhancement supplement that combines advanced 
-                  neuroscience with carefully selected ingredients. Each tablet contains 90mg of our proprietary 
+                  Cerebroprotein 90mg is a premium cognitive enhancement supplement that combines advanced
+                  neuroscience with carefully selected ingredients. Each tablet contains 90mg of our proprietary
                   cerebroprotein complex, specifically designed to support brain health and cognitive performance.
                 </p>
                 <p className="text-muted-foreground">
-                  Developed through extensive research and clinical testing, Cerebroprotein represents a 
-                  breakthrough in nutritional neuroscience, offering a safe and effective way to support 
+                  Developed through extensive research and clinical testing, Cerebroprotein represents a
+                  breakthrough in nutritional neuroscience, offering a safe and effective way to support
                   your brain's natural functions.
                 </p>
               </div>
@@ -359,7 +482,7 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-4">
                     <Zap className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                     <div>
@@ -369,7 +492,7 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-4">
                     <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                     <div>
@@ -380,7 +503,7 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
                     <Shield className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
@@ -391,7 +514,7 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-4">
                     <Clock className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                     <div>
@@ -401,7 +524,7 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-4">
                     <Beaker className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                     <div>
@@ -423,131 +546,258 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Enquire Now</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Enquire Now
+              </h2>
               <p className="text-muted-foreground">
-                Fill out the form below to inquire about purchasing Cerebroprotein 90mg.
+                Fill out the form below to inquire about purchasing
+                Cerebroprotein 90mg.
               </p>
             </div>
 
             <Card className="shadow-card">
               <CardContent className="p-8">
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Product Selection */}
                   <div>
                     <Label htmlFor="product">Select Product *</Label>
-                    <Select>
+                    <Select
+                      onValueChange={(val) =>
+                        handleSelectChange("product", val)
+                      }
+                      value={formData.product}
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Choose your product" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="100-tablets">Cerebroprotein 90 mg (100 Tablets) - $125</SelectItem>
-                        <SelectItem value="200-tablets">Cerebroprotein 90 mg (200 Tablets) - $249</SelectItem>
+                        <SelectItem value="Cerebroprotein 90 mg (100 Tablets) - $125">
+                          Cerebroprotein 90 mg (100 Tablets) - $125
+                        </SelectItem>
+                        <SelectItem value="Cerebroprotein 90 mg (200 Tablets) - $249">
+                          Cerebroprotein 90 mg (200 Tablets) - $249
+                        </SelectItem>
                       </SelectContent>
                     </Select>
+                    {errors.product && (
+                      <p className="text-red-500 text-sm mt-1">{errors.product}</p>
+                    )}
                   </div>
 
                   {/* Personal Information */}
                   <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Personal Information</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">
+                      Personal Information
+                    </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="fullName">Full Name *</Label>
-                        <Input id="fullName" placeholder="Enter your full name" />
+                        <Label htmlFor="full_name">Full Name *</Label>
+                        <Input
+                          id="full_name"
+                          value={formData.full_name}
+                          onChange={handleChange}
+                          placeholder="Enter your full name"
+                        />
+                        {errors.full_name && (
+                          <p className="text-red-500 text-sm mt-1">{errors.full_name}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="phone">Phone Number *</Label>
-                        <Input id="phone" placeholder="Enter your phone number" />
+                        <Input
+                          id="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="Enter your phone number"
+                        />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="email">Email Address *</Label>
-                        <Input type="email" id="email" placeholder="Enter your email address" />
+                        <Input
+                          type="email"
+                          id="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="Enter your email address"
+                        />
+                        {errors.email && (
+                          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="dob">Date of Birth *</Label>
-                        <Input id="dob" placeholder="DD/MM/YYYY" />
+                        <Input
+                          id="dob"
+                          value={formData.dob}
+                          onChange={handleChange}
+                          placeholder="DD/MM/YYYY"
+                        />
+                        {errors.dob && (
+                          <p className="text-red-500 text-sm mt-1">{errors.dob}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="gender">Select Gender *</Label>
-                        <Select>
+                        <Select
+                          onValueChange={(val) =>
+                            handleSelectChange("gender", val)
+                          }
+                          value={formData.gender}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select gender" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="male">Male</SelectItem>
-                            <SelectItem value="female">Female</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
-                            <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                            <SelectItem value="Male">Male</SelectItem>
+                            <SelectItem value="Female">Female</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                            <SelectItem value="Prefer not to say">
+                              Prefer not to say
+                            </SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.gender && (
+                          <p className="text-red-500 text-sm mt-1">{errors.gender}</p>
+                        )}
                       </div>
                       <div className="md:col-span-2">
                         <Label htmlFor="address">Address *</Label>
-                        <Textarea id="address" placeholder="Enter your complete address" />
+                        <Textarea
+                          id="address"
+                          value={formData.address}
+                          onChange={handleChange}
+                          placeholder="Enter your complete address"
+                        />
+                        {errors.address && (
+                          <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="country">Select Country *</Label>
-                        <Select>
+                        <Select
+                          onValueChange={(val) =>
+                            handleSelectChange("country", val)
+                          }
+                          value={formData.country}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select your country" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="us">United States</SelectItem>
-                            <SelectItem value="ca">Canada</SelectItem>
-                            <SelectItem value="uk">United Kingdom</SelectItem>
-                            <SelectItem value="au">Australia</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
+                            <SelectItem value="United States">United States</SelectItem>
+                            <SelectItem value="Canada">Canada</SelectItem>
+                            <SelectItem value="United Kingdom">United Kingdom</SelectItem>
+                            <SelectItem value="Australia">Australia</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.country && (
+                          <p className="text-red-500 text-sm mt-1">{errors.country}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="state">Select State *</Label>
-                        <Select>
+                        <Select
+                          onValueChange={(val) =>
+                            handleSelectChange("state", val)
+                          }
+                          value={formData.state}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Select your state" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="ca">California</SelectItem>
-                            <SelectItem value="ny">New York</SelectItem>
-                            <SelectItem value="tx">Texas</SelectItem>
-                            <SelectItem value="fl">Florida</SelectItem>
-                            <SelectItem value="other">Other</SelectItem>
+                            <SelectItem value="California">California</SelectItem>
+                            <SelectItem value="New York">New York</SelectItem>
+                            <SelectItem value="Texas">Texas</SelectItem>
+                            <SelectItem value="Florida">Florida</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
                           </SelectContent>
                         </Select>
+                        {errors.state && (
+                          <p className="text-red-500 text-sm mt-1">{errors.state}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="city">City *</Label>
-                        <Input id="city" placeholder="Enter your city" />
+                        <Input
+                          id="city"
+                          value={formData.city}
+                          onChange={handleChange}
+                          placeholder="Enter your city"
+                        />
+                        {errors.city && (
+                          <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                        )}
                       </div>
                       <div>
                         <Label htmlFor="postal">Postal / Zip Code *</Label>
-                        <Input id="postal" placeholder="Enter postal code" />
+                        <Input
+                          id="postal"
+                          value={formData.postal}
+                          onChange={handleChange}
+                          placeholder="Enter postal code"
+                        />
+                        {errors.postal && (
+                          <p className="text-red-500 text-sm mt-1">{errors.postal}</p>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   {/* Medical Questions */}
                   <div className="border-t pt-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Medical Questions</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">
+                      Medical Questions
+                    </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="physicianName">Physician Name</Label>
-                        <Input id="physicianName" placeholder="Enter physician name" />
+                        <Label htmlFor="physician_name">Physician Name</Label>
+                        <Input
+                          id="physician_name"
+                          value={formData.physician_name}
+                          onChange={handleChange}
+                          placeholder="Enter physician name"
+                        />
                       </div>
                       <div>
-                        <Label htmlFor="clinicName">Clinic Name</Label>
-                        <Input id="clinicName" placeholder="Enter clinic name" />
+                        <Label htmlFor="clinic_name">Clinic Name</Label>
+                        <Input
+                          id="clinic_name"
+                          value={formData.clinic_name}
+                          onChange={handleChange}
+                          placeholder="Enter clinic name"
+                        />
                       </div>
                       <div>
-                        <Label htmlFor="clinicCity">City</Label>
-                        <Input id="clinicCity" placeholder="Enter clinic city" />
+                        <Label htmlFor="clinic_city">City</Label>
+                        <Input
+                          id="clinic_city"
+                          value={formData.clinic_city}
+                          onChange={handleChange}
+                          placeholder="Enter clinic city"
+                        />
                       </div>
                       <div>
-                        <Label htmlFor="clinicMobile">Mobile Number</Label>
-                        <Input id="clinicMobile" placeholder="Enter clinic mobile number" />
+                        <Label htmlFor="clinic_mobile">Mobile Number</Label>
+                        <Input
+                          id="clinic_mobile"
+                          value={formData.clinic_mobile}
+                          onChange={handleChange}
+                          placeholder="Enter clinic mobile number"
+                        />
                       </div>
                       <div className="md:col-span-2">
                         <Label htmlFor="allergies">Allergies</Label>
-                        <Textarea id="allergies" placeholder="Please list any allergies or medical conditions" />
+                        <Textarea
+                          id="allergies"
+                          value={formData.allergies}
+                          onChange={handleChange}
+                          placeholder="Please list any allergies or medical conditions"
+                        />
                       </div>
                     </div>
                   </div>
@@ -555,15 +805,30 @@ const Index = () => {
                   {/* Terms & Conditions */}
                   <div className="border-t pt-6">
                     <div className="flex items-start space-x-2">
-                      <Checkbox id="terms" />
+                      <Checkbox
+                        id="terms"
+                        checked={formData.terms}
+                        onCheckedChange={(val) =>
+                          handleSelectChange("terms", val)
+                        }
+                      />
                       <Label htmlFor="terms" className="text-sm">
-                        I understand the terms and conditions and privacy policy. *
+                        I understand the terms and conditions and privacy
+                        policy. *
                       </Label>
                     </div>
+                    {errors.terms && (
+                      <p className="text-red-500 text-sm mt-1">{errors.terms}</p>
+                    )}
                   </div>
 
                   {/* Submit Button */}
-                  <Button type="submit" variant="cta" size="lg" className="w-full">
+                  <Button
+                    type="submit"
+                    variant="cta"
+                    size="lg"
+                    className="w-full"
+                  >
                     Submit Enquiry
                   </Button>
                 </form>

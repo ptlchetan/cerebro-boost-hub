@@ -13,7 +13,28 @@ import axios from "axios";
 import { useState } from "react";
 
 const Index = () => {
-  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    product: "",
+    full_name: "",
+    phone: "",
+    email: "",
+    dob: "",
+    gender: "",
+    address: "",
+    country: "",
+    state: "",
+    city: "",
+    postal: "",
+    physician_name: "",
+    clinic_name: "",
+    clinic_city: "",
+    clinic_mobile: "",
+    allergies: "",
+    terms: false,
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const validateForm = () => {
     let newErrors: Record<string, string> = {};
 
@@ -36,27 +57,6 @@ const Index = () => {
 
     return newErrors;
   };
-
-  const [formData, setFormData] = useState({
-
-    product: "",
-    full_name: "",
-    phone: "",
-    email: "",
-    dob: "",
-    gender: "",
-    address: "",
-    country: "",
-    state: "",
-    city: "",
-    postal: "",
-    physician_name: "",
-    clinic_name: "",
-    clinic_city: "",
-    clinic_mobile: "",
-    allergies: "",
-    terms: false,
-  });
 
   const handleChange = (e) => {
 

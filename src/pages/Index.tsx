@@ -13,28 +13,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const Index = () => {
-  const [formData, setFormData] = useState({
-    product: "",
-    full_name: "",
-    phone: "",
-    email: "",
-    dob: "",
-    gender: "",
-    address: "",
-    country: "",
-    state: "",
-    city: "",
-    postal: "",
-    physician_name: "",
-    clinic_name: "",
-    clinic_city: "",
-    clinic_mobile: "",
-    allergies: "",
-    terms: false,
-  });
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
+  const [errors, setErrors] = useState({});
   const validateForm = () => {
     let newErrors: Record<string, string> = {};
 
@@ -58,29 +37,46 @@ const Index = () => {
     return newErrors;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
+  const [formData, setFormData] = useState({
+
+    product: "",
+    full_name: "",
+    phone: "",
+    email: "",
+    dob: "",
+    gender: "",
+    address: "",
+    country: "",
+    state: "",
+    city: "",
+    postal: "",
+    physician_name: "",
+    clinic_name: "",
+    clinic_city: "",
+    clinic_mobile: "",
+    allergies: "",
+    terms: false,
+  });
+
+  const handleChange = (e) => {
+
+    const { id, value, type, checked } = e.target;
+
     setFormData({
       ...formData,
-      [id]: value,
+      [id]: type === "checkbox" ? checked : value,
     });
   };
 
-  const handleCheckboxChange = (field: string, checked: boolean) => {
-    setFormData({
-      ...formData,
-      [field]: checked,
-    });
-  };
+  const handleSelectChange = (field, value) => {
 
-  const handleSelectChange = (field: string, value: string) => {
     setFormData({
       ...formData,
       [field]: value,
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // frontend validation first
@@ -812,8 +808,8 @@ const Index = () => {
                       <Checkbox
                         id="terms"
                         checked={formData.terms}
-                        onCheckedChange={(checked) =>
-                          handleCheckboxChange("terms", checked as boolean)
+                        onCheckedChange={(val) =>
+                          handleSelectChange("terms", val)
                         }
                       />
                       <Label htmlFor="terms" className="text-sm">

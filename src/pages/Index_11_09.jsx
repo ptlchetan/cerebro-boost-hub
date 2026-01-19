@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Brain, Lightbulb, Shield, Stethoscope, ShieldCheck, Target, Leaf, Zap, CheckCircle, Heart, Users, Award, Beaker, Clock } from "lucide-react";
+import { Brain, Shield, Zap, CheckCircle, Heart, Users, Award, Beaker, Clock } from "lucide-react";
 import cerebroproteinProduct from "@/assets/cerebroprotein_image.png";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -24,34 +24,6 @@ const Index = () => {
   const [cvvValid, setCvvValid] = useState(false);
   const [cardExpiryValid, setCardExpiryValid] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [openIndex, setOpenIndex] = useState(null);
-  const faqs = [
-    {
-      question: "How does Cerebroprotein Hydrolysate benefit the brain?",
-      answer:
-        "It promotes brain cell repair and protection by enhancing neuroregeneration and neuroplasticity.",
-    },
-    {
-      question: "How long until results from Cerebroprotein are seen?",
-      answer:
-        "The duration of treatment is typically 4 to 12 weeks, as determined by a doctor based on your specific condition.",
-    },
-    {
-      question: "Can elderly patients safely take this medication?",
-      answer:
-        "Yes, it is often prescribed for elderly individuals dealing with age-related cognitive decline, with proper medical supervision.",
-    },
-    {
-      question: "Is Cerebroprotein the same as other brain supplements?",
-      answer:
-        "No, it is a clinically-tested, peptide-based nootropic. Always consult a healthcare professional before combining it with other supplements.",
-    },
-  ];
-
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   const [formData, setFormData] = useState({
     product: "",
     full_name: "",
@@ -435,7 +407,7 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <div className="justify-center">
+            <div className="hidden sm:flex justify-center">
               <img
                 src={cerebroproteinProduct}
                 alt="Cerebroprotein 90mg Product"
@@ -449,432 +421,142 @@ const Index = () => {
       {/* Product Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-4">
                 Cerebroprotein 90 mg — Your Solution for Better Mental Clarity
               </h2>
             </div>
 
-            {/* Content only - centered */}
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">What it is:</h3>
-                <p className="text-muted-foreground">
-                  Cerebroprotein 90 mg is a nutritional supplement designed to support brain health and cognitive function.
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="text-center">
+                <img
+                  src={cerebroproteinProduct}
+                  alt="Cerebroprotein 90mg"
+                  className="max-w-sm w-full h-auto mx-auto rounded-lg shadow-card mb-4"
+                />
+                <p className="text-sm text-muted-foreground italic">
+                  *The product may look different than the picture shown.
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">How it helps:</h3>
-                <p className="text-muted-foreground">
-                  Helps improve focus, memory, and overall mental clarity with clinically-backed ingredients.
-                </p>
-              </div>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">What it is:</h3>
+                  <p className="text-muted-foreground">
+                    Cerebroprotein 90 mg is a nutritional supplement designed to support brain health and cognitive function.
+                  </p>
+                </div>
 
-              <div>
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-3">How it helps:</h3>
+                  <p className="text-muted-foreground">
+                    Helps improve focus, memory, and overall mental clarity with clinically-backed ingredients.
+                  </p>
+                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="flex items-start space-x-3">
-                    <Brain className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-medium text-foreground">Boosts Brain Function</h4>
-                      <p className="text-sm text-muted-foreground">Enhances memory and focus</p>
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">Key Benefits:</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-start space-x-3">
+                      <Brain className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-foreground">Boosts Brain Function</h4>
+                        <p className="text-sm text-muted-foreground">Enhances memory and focus</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <Shield className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-medium text-foreground">Clinically Backed</h4>
-                      <p className="text-sm text-muted-foreground">Proven in scientific studies</p>
+                    <div className="flex items-start space-x-3">
+                      <Shield className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-foreground">Clinically Backed</h4>
+                        <p className="text-sm text-muted-foreground">Proven in scientific studies</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <Zap className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-medium text-foreground">Improves Mental Health</h4>
-                      <p className="text-sm text-muted-foreground">Reduces brain fog and fatigue</p>
+                    <div className="flex items-start space-x-3">
+                      <Zap className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-foreground">Improves Mental Health</h4>
+                        <p className="text-sm text-muted-foreground">Reduces brain fog and fatigue</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start space-x-3">
-                    <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <div>
-                      <h4 className="font-medium text-foreground">Safe and Trusted</h4>
-                      <p className="text-sm text-muted-foreground">Quality standards</p>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-foreground">Safe and Trusted</h4>
+                        <p className="text-sm text-muted-foreground">Quality standards</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Pricing */}
-              <div className="space-y-6 pt-6 border-t border-border">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <Card className="shadow-soft">
-                    <CardContent className="p-6 text-center">
-                      <h4 className="font-semibold text-foreground mb-2">100 Tablets</h4>
-                      <div className="space-y-2 mb-4">
-                        <span className="text-2xl font-bold text-foreground">$125</span>
-                        <span className="text-lg text-muted-foreground line-through ml-2">$175</span>
-                        <p className="text-sm text-accent font-medium">Save $50 on your first order!</p>
-                      </div>
-                      <Button onClick={scrollToEnquire} variant="cta" className="w-full">
-                        Buy Now
-                      </Button>
-                    </CardContent>
-                  </Card>
+                {/* Pricing */}
+                <div className="space-y-4 pt-6 border-t border-border">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Card className="shadow-soft">
+                      <CardContent className="p-6 text-center">
+                        <h4 className="font-semibold text-foreground mb-2">100 Tablets</h4>
+                        <div className="space-y-2 mb-4">
+                          <span className="text-2xl font-bold text-foreground">$125</span>
+                          <span className="text-lg text-muted-foreground line-through ml-2">$175</span>
+                          <p className="text-sm text-accent font-medium">Save $50 on your first order!</p>
+                        </div>
+                        <Button onClick={scrollToEnquire} variant="cta" className="w-full">
+                          Buy Now
+                        </Button>
+                      </CardContent>
+                    </Card>
 
-                  <Card className="shadow-soft">
-                    <CardContent className="p-6 text-center">
-                      <h4 className="font-semibold text-foreground mb-2">200 Tablets</h4>
-                      <div className="space-y-2 mb-4">
-                        <span className="text-2xl font-bold text-foreground">$249</span>
-                        <span className="text-lg text-muted-foreground line-through ml-2">$299</span>
-                        <p className="text-sm text-accent font-medium">Save $50 on your first order!</p>
-                      </div>
-                      <Button onClick={scrollToEnquire} variant="cta" className="w-full">
-                        Buy Now
-                      </Button>
-                    </CardContent>
-                  </Card>
+                    <Card className="shadow-soft">
+                      <CardContent className="p-6 text-center">
+                        <h4 className="font-semibold text-foreground mb-2">200 Tablets</h4>
+                        <div className="space-y-2 mb-4">
+                          <span className="text-2xl font-bold text-foreground">$249</span>
+                          <span className="text-lg text-muted-foreground line-through ml-2">$299</span>
+                          <p className="text-sm text-accent font-medium">Save $50 on your first order!</p>
+                        </div>
+                        <Button onClick={scrollToEnquire} variant="cta" className="w-full">
+                          Buy Now
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
-                <p className="text-center text-muted-foreground text-base mt-6">
-                  <strong>Take Daily:</strong> Take one to two tablets daily with water
-                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Cerebroprotein Section */}
-      <section id="about-cerebroprotein" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Heading */}
-            <div className="text-center mb-10">
-              <h2 className="text-4xl font-bold text-foreground mb-4">
-                What is Cerebroprotein?
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                A scientifically-formulated brain health supplement designed to enhance
-                cognitive function, improve memory, and support overall mental clarity.
-              </p>
-            </div>
-
-            {/* Content */}
-            <div className="space-y-6 text-center md:text-left">
-              <p className="text-muted-foreground">
-                <strong>Cerebroprotein 90</strong> is an advanced oral tablet containing
-                Cerebroprotein Hydrolysate 90 mg, a powerful peptide-based nootropic.
-                It is engineered to aid neurological recovery and support overall brain function.
-              </p>
-
-              <p className="text-muted-foreground">
-                It works by mimicking the brain's natural neurotrophic factors,
-                promoting neuroprotection, neuroplasticity, and cognitive regeneration.
-                This makes Cerebroprotein a valuable therapy for a wide range of neurological conditions.
-              </p>
-
-              {/* Uses */}
-              <div className="mt-8">
-                <h3 className="text-2xl font-semibold text-foreground mb-3">
-                  Uses of Cerebroprotein Hydrolysate Tablets
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Cerebroprotein is prescribed for the management of:
-                </p>
-                <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                  <li>Stroke Rehabilitation (Ischemic & Hemorrhagic)</li>
-                  <li>Traumatic Brain Injury (TBI)</li>
-                  <li>Vascular Dementia and Alzheimer’s Disease</li>
-                  <li>Mild Cognitive Impairment</li>
-                  <li>Parkinson's-related Cognitive Issues</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ✅ Full-width Blue Background Section */}
+      {/* How It Works Section */}
       <section className="py-16 bg-light-blue">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-6">
-                How Cerebroprotein Works
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Cerebroprotein Hydrolysate's effectiveness comes from its multi-pronged approach to brain repair
-              </p>
-            </div>
-
-            {/* Row 1: 3 items */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <h2 className="text-3xl font-bold text-foreground mb-12">
+              How Cerebroprotein 90 mg Works
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="space-y-4">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto">
                   <span className="text-2xl font-bold">1</span>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Neuroprotection</h3>
-                <p className="text-muted-foreground">
-                  Protects neurons from oxidative stress and damage, preventing premature cell death.
-                </p>
+                <h3 className="text-xl font-semibold text-foreground">Take Daily</h3>
+                <p className="text-muted-foreground">Take one capsule daily with water as directed.</p>
               </div>
-
               <div className="space-y-4">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto">
                   <span className="text-2xl font-bold">2</span>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Neuroregeneration</h3>
-                <p className="text-muted-foreground">
-                  Stimulates the growth of new axons and dendrites, essential for repairing and rebuilding neural networks.
-                </p>
+                <h3 className="text-xl font-semibold text-foreground">Absorb & Support</h3>
+                <p className="text-muted-foreground">Cerebroprotein absorbs into your system to support brain cells.</p>
               </div>
-
               <div className="space-y-4">
                 <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto">
                   <span className="text-2xl font-bold">3</span>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Neuroplasticity</h3>
-                <p className="text-muted-foreground">
-                  Improves the brain's ability to reorganize itself by enhancing cognitive signaling and synaptic activity.
-                </p>
+                <h3 className="text-xl font-semibold text-foreground">Experience Results</h3>
+                <p className="text-muted-foreground">Experience improved memory, focus, and cognitive performance over time.</p>
               </div>
             </div>
-
-            {/* Row 2: 2 items */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-2xl mx-auto">
-              <div className="space-y-4">
-                <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl font-bold">4</span>
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">Anti-apoptotic Action</h3>
-                <p className="text-muted-foreground">
-                  Intervenes in the process of programmed cell death (apoptosis), preserving more brain cells.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-2xl font-bold">5</span>
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">Metabolic Support</h3>
-                <p className="text-muted-foreground">
-                  Increases energy production within brain cells by optimizing glucose metabolism.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ✅ Back to Key Benefits */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h3 className="text-3xl font-bold text-foreground mb-6 text-center">Key Benefits</h3>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                The benefits of Cerebroprotein extend to both acute and long-term brain health challenges
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <Brain className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Accelerates Post-Stroke Recovery </h4>
-                    <p className="text-muted-foreground text-sm">
-                      Aids in faster cognitive and functional recovery after both ischemic and hemorrhagic strokes.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <Lightbulb className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Enhances Cognitive Function</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Supports improvements in memory, learning ability, and overall mental sharpness.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <Stethoscope className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Manages Dementia Symptoms</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Helps slow the progression of various forms of dementia, including Alzheimer’s disease and vascular dementia, particularly when initiated early.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <ShieldCheck className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Reduces Brain Inflammation</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Actively works to reduce inflammation and edema in the brain.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <Target className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Boosts Focus and Attention</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Improves attention span and reaction time, benefiting patients with post-surgical brain trauma or age-related decline.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <Leaf className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Well-Tolerated Profile</h4>
-                    <p className="text-muted-foreground text-sm">
-                      With minimal sedative effects and a non-addictive nature, it is safe for long-term use in elderly, diabetic, and hypertensive patients.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Dosage, Side Effects, and Precautions */}
-      <section className="py-16 bg-light-blue">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-bold text-foreground mb-12 text-center">
-              Cerebroprotein: Dosage, Side Effects, and Precautions
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-              {/* Dosage Card */}
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">Dosage & Administration</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                    <li><strong>Standard Dosage:</strong> One tablet (90 mg) taken once or twice daily, or as directed by a healthcare provider.</li>
-                    <li><strong>Administration:</strong> Take the tablet orally with water, preferably after meals.</li>
-                    <li><strong>Duration:</strong> Treatment typically lasts 4–12 weeks but is customized by a physician based on the patient's condition.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Side Effects Card */}
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">Potential Side Effects</h3>
-                  <p className="text-muted-foreground">
-                    While generally well-tolerated, some may experience:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                    <li><strong>Common Side Effects:</strong> Mild headaches, nausea, vomiting, or fatigue.</li>
-                    <li><strong>Rare Side Effects:</strong> Allergic reactions, palpitations, or increased heart rate.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Precautions Card */}
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">Important Precautions</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                    <li>Consult a physician before use, especially if there is a history of seizures or epilepsy.</li>
-                    <li>Do not use in patients with active intracranial bleeding.</li>
-                    <li>Caution is advised for pregnant or breastfeeding women.</li>
-                    <li>Use in children only as prescribed by a specialist.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              {/* Drug Interactions Card */}
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xl font-semibold text-foreground">Drug Interactions</h3>
-                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                    <li><strong>Antiepileptics:</strong> May alter seizure threshold; requires careful monitoring.</li>
-                    <li><strong>Anticoagulants / Antiplatelets:</strong> Use with caution.</li>
-                    <li><strong>Other Nootropics:</strong> Combined use may increase neuroexcitation.</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Common Note */}
-            <p className="mt-10 text-center text-sm text-muted-foreground italic">
-              Always inform a doctor of all medications, supplements, and herbal products being taken to avoid potential interactions.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-foreground mb-4">
-                Frequently Asked Questions about Cerebroprotein
-              </h3>
-              <p className="text-lg text-muted-foreground">
-                Find quick answers to questions about Cerebroprotein Hydrolysate
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="border-b border-border pb-4 cursor-pointer"
-                  onClick={() => toggleFAQ(index)}
-                >
-                  <h4 className="flex justify-between items-center font-semibold text-foreground">
-                    {faq.question}
-                    <span className="text-accent">
-                      {openIndex === index ? "−" : "+"}
-                    </span>
-                  </h4>
-                  {openIndex === index && (
-                    <p className="mt-4 text-muted-foreground">{faq.answer}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Conclusion Section */}
-      <section id="conclusion" className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-accent/10 rounded-2xl shadow-lg p-10 text-center">
-              <h3 className="text-3xl font-bold text-foreground mb-6">
-                Conclusion: A Trusted Solution for Brain Recovery
-              </h3>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Cerebroprotein offers a scientifically-backed solution for individuals facing neurological challenges.
-                With its Cerebroprotein Hydrolysate 90 mg formula, it supports recovery from conditions like stroke
-                and TBI, while also helping to manage the symptoms of dementia and cognitive decline.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Cerebroprotein provides a reliable and effective therapeutic option for enhancing brain health and function.
-              </p>
-              <p className="mt-10 text-center text-sm text-muted-foreground italic">
-                This is for informational purposes only. For medical advice or a diagnosis, consult a professional.
-              </p>
-            </div>
-
           </div>
         </div>
       </section>
@@ -887,7 +569,7 @@ const Index = () => {
               What Our Customers Say
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Card className="shadow-soft">
                 <CardContent className="p-6">
                   <p className="text-muted-foreground mb-4 italic">
                     "Cerebroprotein has significantly improved my focus and mental clarity. I feel sharper than ever."
@@ -895,7 +577,7 @@ const Index = () => {
                   <p className="font-semibold text-foreground">— Sarah Johnson</p>
                 </CardContent>
               </Card>
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Card className="shadow-soft">
                 <CardContent className="p-6">
                   <p className="text-muted-foreground mb-4 italic">
                     "As a healthcare professional, I recommend Cerebroprotein 90 mg to my patients for cognitive health."
@@ -903,7 +585,7 @@ const Index = () => {
                   <p className="font-semibold text-foreground">— Dr. Michael Chen</p>
                 </CardContent>
               </Card>
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Card className="shadow-soft">
                 <CardContent className="p-6">
                   <p className="text-muted-foreground mb-4 italic">
                     "After using Cerebroprotein for 3 months, my memory and concentration have noticeably improved."
@@ -916,7 +598,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ✅ About Us Section */}
+      {/* About Us Section */}
       <section id="about-us" className="py-16 bg-light-blue">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -929,8 +611,8 @@ const Index = () => {
             </div>
 
             {/* Mission & Vision */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              <Card className="shadow-soft">
                 <CardContent className="p-8 text-center">
                   <Brain className="h-12 w-12 text-accent mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-foreground mb-4">Our Mission</h3>
@@ -941,7 +623,7 @@ const Index = () => {
                 </CardContent>
               </Card>
 
-              <Card className="shadow-soft hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Card className="shadow-soft">
                 <CardContent className="p-8 text-center">
                   <Heart className="h-12 w-12 text-accent mx-auto mb-4" />
                   <h3 className="text-2xl font-semibold text-foreground mb-4">Our Vision</h3>
@@ -952,64 +634,152 @@ const Index = () => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Values */}
+            <div className="mb-16">
+              <h3 className="text-3xl font-bold text-foreground mb-12 text-center">Our Values</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <Brain className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-foreground mb-2">Scientific Excellence</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Every product is backed by rigorous research and clinical evidence.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Award className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-foreground mb-2">Quality Assurance</h4>
+                  <p className="text-sm text-muted-foreground">
+                    We maintain the highest manufacturing and testing standards.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Users className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-foreground mb-2">Customer Focus</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Your health and satisfaction are our top priorities.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <Heart className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h4 className="text-lg font-semibold text-foreground mb-2">Integrity</h4>
+                  <p className="text-sm text-muted-foreground">
+                    We operate with transparency and ethical practices.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ✅ Our Values Section (separate) */}
-      <section id="our-values" className="py-16 bg-background">
+      {/* About Cerebroprotein Section */}
+      <section id="about-cerebroprotein" className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-foreground mb-6">Our Values</h2>
+              <h2 className="text-4xl font-bold text-foreground mb-6">About Cerebroprotein 90mg</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                The principles that guide our mission and vision
+                A scientifically-formulated brain health supplement designed to enhance cognitive function,
+                improve memory, and support overall mental clarity.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Card 1 */}
-              <div className="text-center p-6 rounded-2xl bg-light-blue shadow-soft 
-                        hover:shadow-xl  hover:scale-105 
-                        transition-all duration-300">
-                <Brain className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-foreground mb-2">Scientific Excellence</h4>
-                <p className="text-sm text-muted-foreground">
-                  Every product is backed by rigorous research and clinical evidence.
+            {/* Product Image and Overview */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+              <div className="text-center">
+                <img
+                  src={cerebroproteinProduct}
+                  alt="Cerebroprotein 90mg"
+                  className="max-w-sm w-full h-auto mx-auto rounded-lg shadow-card mb-4"
+                />
+                <p className="text-sm text-muted-foreground italic">
+                  *The product may look different than the picture shown.
                 </p>
               </div>
 
-              {/* Card 2 */}
-              <div className="text-center p-6 rounded-2xl bg-light-blue shadow-soft 
-                        hover:shadow-xl hover:scale-105 
-                        transition-all duration-300">
-                <Award className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-foreground mb-2">Quality Assurance</h4>
-                <p className="text-sm text-muted-foreground">
-                  We maintain the highest manufacturing and testing standards.
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-foreground">What is Cerebroprotein?</h3>
+                <p className="text-muted-foreground">
+                  Cerebroprotein 90mg is a premium cognitive enhancement supplement that combines advanced
+                  neuroscience with carefully selected ingredients. Each tablet contains 90mg of our proprietary
+                  cerebroprotein complex, specifically designed to support brain health and cognitive performance.
+                </p>
+                <p className="text-muted-foreground">
+                  Developed through extensive research and clinical testing, Cerebroprotein represents a
+                  breakthrough in nutritional neuroscience, offering a safe and effective way to support
+                  your brain's natural functions.
                 </p>
               </div>
+            </div>
 
-              {/* Card 3 */}
-              <div className="text-center p-6 rounded-2xl bg-light-blue shadow-soft 
-                        hover:shadow-xl hover:scale-105 
-                        transition-all duration-300">
-                <Users className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-foreground mb-2">Customer Focus</h4>
-                <p className="text-sm text-muted-foreground">
-                  Your health and satisfaction are our top priorities.
-                </p>
-              </div>
+            {/* Key Benefits */}
+            <div className="mb-16">
+              <h3 className="text-3xl font-bold text-foreground mb-12 text-center">Key Benefits</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <Brain className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Enhanced Memory</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Supports both short-term and long-term memory formation and recall.
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Card 4 */}
-              <div className="text-center p-6 rounded-2xl bg-light-blue shadow-soft 
-                        hover:shadow-xl hover:scale-105 
-                        transition-all duration-300">
-                <Heart className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h4 className="text-lg font-semibold text-foreground mb-2">Integrity</h4>
-                <p className="text-sm text-muted-foreground">
-                  We operate with transparency and ethical practices.
-                </p>
+                  <div className="flex items-start space-x-4">
+                    <Zap className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Improved Focus</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Enhances concentration and attention span for better productivity.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Mental Clarity</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Reduces brain fog and promotes clearer, sharper thinking.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <Shield className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Neuroprotection</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Provides antioxidant protection for brain cells against damage.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <Clock className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Long-term Support</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Supports healthy aging of the brain and cognitive longevity.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <Beaker className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Scientifically Proven</h4>
+                      <p className="text-muted-foreground text-sm">
+                        Backed by clinical research and rigorous testing.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1026,7 +796,7 @@ const Index = () => {
               </h2>
               <p className="text-muted-foreground">
                 Fill out the form below to inquire about purchasing
-                Cerebroprotein 90mg
+                Cerebroprotein 90mg.
               </p>
             </div>
 
@@ -1574,7 +1344,7 @@ const Index = () => {
               Get Started with Cerebroprotein 90 mg
             </h2>
             <p className="text-xl text-primary-foreground/90 mb-8">
-              Join thousands of satisfied customers who have improved their cognitive health with Cerebroprotein
+              Join thousands of satisfied customers who have improved their cognitive health with Cerebroprotein.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={scrollToEnquire} variant="secondary" size="lg">
@@ -1587,7 +1357,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
     </div>
   );
 };

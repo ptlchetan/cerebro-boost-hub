@@ -3,25 +3,35 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoNew from "@/assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", path: "#home" },
     { name: "About Us", path: "#about-us" },
     { name: "About Cerebroprotein", path: "#about-cerebroprotein" },
-    { name: "Enquire Now", path: "#enquire-now" },
+    { name: "Buy Now", path: "#enquire-now" },
   ];
 
   const scrollToSection = (sectionId) => {
-    const element = document.querySelector(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    const section = sectionId.replace("#", "");
+
+    if (location.pathname === "/") {
+      // Already on homepage, scroll directly
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      setIsMenuOpen(false);
+    } else {
+      // Navigate to homepage, and pass section info through state (not URL)
+      navigate("/", { state: { scrollTo: section } });
     }
-    setIsMenuOpen(false);
   };
 
   const isActive = (path) => {
@@ -71,9 +81,8 @@ export const Navbar = () => {
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.path)}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.path) ? "text-primary" : "text-foreground"
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.path) ? "text-primary" : "text-foreground"
+                  }`}
               >
                 {item.name}
               </button>
@@ -99,9 +108,8 @@ export const Navbar = () => {
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.path)}
-                  className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${
-                    isActive(item.path) ? "text-primary bg-secondary" : "text-foreground"
-                  }`}
+                  className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors hover:text-primary ${isActive(item.path) ? "text-primary bg-secondary" : "text-foreground"
+                    }`}
                 >
                   {item.name}
                 </button>

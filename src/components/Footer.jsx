@@ -8,19 +8,35 @@ export const Footer = () => {
           {/* Contact Info */}
           <div className="text-center md:text-left">
             <div className="space-y-1 text-muted-foreground">
-              <p>Phone: +1-XXX-XXX-XXXX</p>
-              <p>Email: support@cerebroprotein.com</p>
+              <p>Phone:  <Link
+              to="tel:+1-718-312-8727">1-718-312-8727</Link> </p>
+              <p>Email: <Link
+              to="mailto:service@insulinhub.com">service@insulinhub.com</Link></p><br></br>
+              <p>POWERED BY INSULINHUB.COM</p>
             </div>
           </div>
 
           {/* Legal Links */}
           <div className="flex space-x-6">
-            <button className="text-muted-foreground hover:text-primary transition-colors text-sm">
+           
+            <Link
+              to="/terms-of-sales"
+              className="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+             Terms of Sale
+            </Link>
+             <Link
+              to="/terms-of-uses"
+              className="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
+              Terms of Use
+            </Link>
+             <Link
+              to="/privacy-policy"
+              className="text-muted-foreground hover:text-primary transition-colors text-sm"
+            >
               Privacy Policy
-            </button>
-            <button className="text-muted-foreground hover:text-primary transition-colors text-sm">
-              Terms & Conditions  
-            </button>
+            </Link>
           </div>
         </div>
 

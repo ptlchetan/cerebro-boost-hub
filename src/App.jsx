@@ -15,6 +15,9 @@ import AboutCerebroprotein from "./pages/AboutCerebroprotein";
 import Blogs from "./pages/Blogs";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfSales from "./pages/TermsOfSales";
+import TermsOfUse from "./pages/TermsOfUse";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +40,9 @@ const App = () => (
               <Route path="/about-cerebroprotein" element={<AboutCerebroprotein />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-sales" element={<TermsOfSales />} />
+               <Route path="/terms-of-uses" element={<TermsOfUse />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
